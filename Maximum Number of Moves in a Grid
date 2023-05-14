@@ -1,0 +1,63 @@
+class Solution {
+public:
+    int maxMoves(vector<vector<int>>& grid) {
+        
+        int r=grid.size();
+        int c=grid[0].size();
+        int i,j;
+        vector<vector<int>>vis(r,vector<int>(c,0));
+        
+        for(j=0;j<r;j++)
+        {
+            vis[j][0]=1;
+        }
+        for(i=0;i<c;i++)
+        {
+            bool be=false;
+            for(j=0;j<r;j++)
+            {
+                
+                if(vis[j][i])
+                {
+                    int p1=INT_MIN;
+                    int p2=INT_MIN;
+                    int p3=INT_MIN;
+                    int current=grid[j][i];
+                    if(i+1<c and j-1>=0)
+                    {
+                        p1=grid[j-1][i+1];
+                    }
+                     if(i+1<c)
+                    {
+                        p2 = grid[j][i+1];
+                    }
+
+                    if(i+1<c and j+1<r)
+                    {
+                        p3 = grid[j+1][i+1];
+                    }
+
+                    if(p1>grid[j][i] or p2>grid[j][i] or p3>current)
+                    {
+                        be=true;
+                        if(p1>current)
+                        {
+                            vis[j-1][i+1]=1;
+                        }
+                        if(p2>current)
+                        {
+                            vis[j][i+1]=1;
+                        }
+                        if(p3>current)
+                        {
+                            vis[j+1][i+1]=1;
+                        }
+                    }
+                }
+            }
+            if(!be)
+                break;
+        }
+        return i;
+    }
+};
